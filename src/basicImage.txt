@@ -1,0 +1,6 @@
+create 400 300
+dot 100 100
+dot 200 200
+dot 299 299
+line 50 50 350 250
+save result_image1.png
