@@ -25,12 +25,85 @@ def save_image(image, filename = "image.png", path = "."):
     image.save(full_path)
 
 
+# determines whether an image or an obj file will be generated
+def target(file_path):
+    if not file_path:
+        print("File path cannot be empty or None.")
+        return
+
+    with open(file_path, 'r') as file:
+        first_line = file.readline().strip().split()
+        if first_line[0] == "create":
+            if first_line[1].isdigit() and first_line[2].isdigit():
+                print("create an image here")
+                generate_image(file_path)
+            elif first_line[1] == "obj":
+                print("create obj file here")
+                generate_obj(file_path)
+            else:
+                print("Incorect use of \"create\" action")
+        else:    
+            print("Incorrect action in file. The file should start with 'create' action.")
+            return
+        
+
+
+# reads commands from a file and creates an .obj file
+def generate_obj(file_path):
+    vertices = []
+    faces = []
+
+    with open(file_path, 'r') as file:
+        first_line = file.readline().strip().split()
+        if first_line[0] == "create":
+            if len(first_line) == 3:
+                name = first_line[2] + ".obj"
+            else:
+                name = "output.obj"
+
+            print("Creating OBJ file")  # DEBUG
+        else:
+            print("Incorrect action in file. The file should start with \"create\" action")
+            return
+
+        for line in file:
+            parts = line.strip().split()
+            if len(parts) == 0:
+                continue  # skip empty lines
+
+            action = parts[0] # this indicates what action will be performed
+            args = parts[1:] if len(parts) > 1 else []
+
+            print(f"Action: {action}, Args: {', '.join(args)}")  # DEBUG
+
+            if action == "dot":
+                if len(args) == 3:
+                    vertices.append((float(args[0]), float(args[1]), float(args[2])))
+                    print(f"Vertex added at {args[0]}, {args[1]}, {args[2]}")  # DEBUG
+                else:
+                    print(f"Insufficient arguments for action 'dot'. Expected: dot x y z")
+
+            elif action == "face":
+                if len(args) >= 3:
+                    faces.append(tuple(map(int, args)))
+                    print(f"Face added with vertices {', '.join(args)}")  # DEBUG
+                else:
+                    print(f"Insufficient arguments for action 'face'. Expected: face v1 v2 v3 [...]")
+
+    with open(name, 'w') as obj_file:
+        for vertex in vertices:
+            obj_file.write(f"v {vertex[0]} {vertex[1]} {vertex[2]}\n")
+        for face in faces:
+            obj_file.write(f"f {' '.join(map(str, face))}\n")
+
+    print("OBJ file created as " + name) # DEBUG
+
 
 # reads a file that has the format: string arg1 arg2 etc
 # this will give varius commands so an image is generated
 def generate_image(file_path):
 
-    if not file_path:
+    if not file_path: # has been already checked inside target(), so probably won't be in production
         print("File path cannot be empty or None.")
         return
     
@@ -79,8 +152,7 @@ def generate_image(file_path):
 
             else:
                 print(f"Unknown action: {action}")
-                return 0
-
+                return 
 
 
 
@@ -88,4 +160,4 @@ if __name__ == "__main__":
     width = 300  
     height = 200  
 
-    generate_image("basicImage.txt")
+    target("basic3d.txt")
