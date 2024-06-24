@@ -1,4 +1,5 @@
 from PIL import Image, ImageDraw
+import os
 
 
 # returns a plain white image size width X height
@@ -47,31 +48,25 @@ def target(file_path):
             return
         
 
-
 # reads commands from a file and creates an .obj file
 def generate_obj(file_path):
     vertices = []
     faces = []
+    name = "output.obj"  # default file name
 
     with open(file_path, 'r') as file:
         first_line = file.readline().strip().split()
-        if first_line[0] == "create":
-            if len(first_line) == 3:
-                name = first_line[2] + ".obj"
-            else:
-                name = "output.obj"
-
-            print("Creating OBJ file")  # DEBUG
-        else:
+        if first_line[0] != "create":
             print("Incorrect action in file. The file should start with \"create\" action")
             return
+        print("Creating OBJ file")  # DEBUG
 
         for line in file:
             parts = line.strip().split()
             if len(parts) == 0:
                 continue  # skip empty lines
 
-            action = parts[0] # this indicates what action will be performed
+            action = parts[0]  # this indicates what action will be performed
             args = parts[1:] if len(parts) > 1 else []
 
             print(f"Action: {action}, Args: {', '.join(args)}")  # DEBUG
@@ -89,14 +84,30 @@ def generate_obj(file_path):
                     print(f"Face added with vertices {', '.join(args)}")  # DEBUG
                 else:
                     print(f"Insufficient arguments for action 'face'. Expected: face v1 v2 v3 [...]")
+            
+            elif action == "save":
+                if len(args) >= 1:
+                    name = args[0]
+                if len(args) == 2:
+                    name = os.path.join(args[1], args[0])
 
+                with open(name, 'w') as obj_file:
+                    for vertex in vertices:
+                        obj_file.write(f"v {vertex[0]} {vertex[1]} {vertex[2]}\n")
+                    for face in faces:
+                        obj_file.write(f"f {' '.join(map(str, face))}\n")
+
+                print(f"OBJ file created as {name}")  # DEBUG
+                return
+
+    # if no 'save' command is found, save to default location
     with open(name, 'w') as obj_file:
         for vertex in vertices:
             obj_file.write(f"v {vertex[0]} {vertex[1]} {vertex[2]}\n")
         for face in faces:
             obj_file.write(f"f {' '.join(map(str, face))}\n")
 
-    print("OBJ file created as " + name) # DEBUG
+    print(f"Warning: No 'save' action found. OBJ file created as {name}")  # DEBUG
 
 
 # reads a file that has the format: string arg1 arg2 etc
@@ -160,4 +171,5 @@ if __name__ == "__main__":
     width = 300  
     height = 200  
 
-    target("basic3d.txt")
+    target("testFiles/largeRect.txt")
+    target("testFiles/rectangle.txt")

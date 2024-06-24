@@ -1,5 +1,6 @@
-create obj PAMERE
+create      obj
 dot 1 1 0.0
 dot 1.0 -1.0 0.0
 dot -1.0 -1.0 0.0
 face 1 2 3
+save hello.obj
