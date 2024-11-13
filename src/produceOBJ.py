@@ -1,27 +1,83 @@
 import os
+from grayscale import grayscale, get_non_white_pixel_locations_from_image, add_padding, normalized_value
+import numpy as np
+import imageio.v3 as iio
 
+
+
+# def map_grayscale_to_3d(image_url, max_depth=10):
+
+#     image = iio.imread(image_url, mode="L")  # "L" for grayscale
+    
+#     # Normalize the grayscale image values to the range [0, max_depth]
+#     # image_normalized = (image / image.max()) * max_depth
+    
+#     # Get image dimensions
+#     height, width = image.shape
+    
+#     # List to store 3D pixel points
+#     pixel_list = []
+
+#     for z in range(0, depth):
+#         for y in range (0, height):
+#             for x in range (0, width):
+#                 if (x == 0 or x == width - 1 or y == 0 or y == height - 1 or z == 0 or z == depth - 1):
+#                     # if (x, y) in non_white_pixel_set:
+#                     #     adjusted_z = z + 1  # Subtract 1 from the z-axis for non-white pixels
+#                     # else:
+#                     #     adjusted_z = z  # Keep z unchanged for regular pixels
+#                     # adjusted_z = max_depth - image_normalized[y,x]
+#                     pixel_intensity = image[y, x]  
+                    
+#                     adjusted_z = normalized_value(pixel_intensity, 0, 255, 0, max_depth)
+#                     pixel_list.append(f"{x:.1f} {y:.1f} {adjusted_z:.1f}")
+
+
+#     return pixel_list
+
+
+
+# making the image in greyscale
+grayImage = grayscale("ptixiaki/src/imageGrayscale.png")
 
 # Specify the file name and the content
 file_name = '3x3x3Cube.xyz'
+paddingImage = add_padding(grayImage, 50)
 
-# initiale values for the start of the mesh
-# x = 0
-# y = 0
-# z = 0
+notWhiteList = get_non_white_pixel_locations_from_image(paddingImage, 100)
+# print(notWhiteList)
+non_white_pixel_set = set(notWhiteList)
 
 # for storing the pixels 
 pixel_list = []
 
-width, height, depth = 5, 5, 3
-padding = 2
-moving_inside = 0
+pixel_intensity_dict = {(x, y): intensity for (x, y, intensity) in notWhiteList}
 
+height, width = paddingImage.shape
+print(f"{width}   {height}")
+depth = 3
+padding = 2
+
+max_depth = 20
+
+moving_inside = 0
+counting = 0
 #creates the points for the cube
 for z in range(0, depth):
     for y in range (0, height):
         for x in range (0, width):
             if (x == 0 or x == width - 1 or y == 0 or y == height - 1 or z == 0 or z == depth - 1):
-                pixel_list.append(f"{x:.1f} {y:.1f} {z:.1f}")
+                if (x, y) in pixel_intensity_dict:
+                    # adjusted_z =  z + 1 # Subtract 1 from the z-axis for non-white pixels
+                    intensity = pixel_intensity_dict[(x, y)]
+                    # print(f"Eimai edw: {intensity}")
+                    adjusted_z = normalized_value(intensity , 0, 255, 0, max_depth)
+                    
+                else:
+                    adjusted_z = z  # Keep z unchanged for regular pixels
+                pixel_list.append(f"{x:.1f} {y:.1f} {adjusted_z:.1f}")
+
+
 
 
 # Create the face indices for each square on each face
@@ -356,20 +412,20 @@ with open("3x3x3.obj", "w") as f:
 
 
 
-# like range(), but it works for float type
-def frange(start, stop, step):
-    if step > 0:
-        while start < stop:
-            yield start
-            start += step
-    elif step < 0:
-        while start > stop:
-            yield start
-            start += step
+# # like range(), but it works for float type
+# def frange(start, stop, step):
+#     if step > 0:
+#         while start < stop:
+#             yield start
+#             start += step
+#     elif step < 0:
+#         while start > stop:
+#             yield start
+#             start += step
 
-def write_to_file(file_name, content_list):
-    # Write the content to the file, overwriting if it already exists
-    with open(file_name, 'w') as file:
-        for item in content_list:
-            file.write(item + '\n')
-    print(f"File '{file_name}' created/overwritten and content written.")
+# def write_to_file(file_name, content_list):
+#     # Write the content to the file, overwriting if it already exists
+#     with open(file_name, 'w') as file:
+#         for item in content_list:
+#             file.write(item + '\n')
+#     print(f"File '{file_name}' created/overwritten and content written.")
