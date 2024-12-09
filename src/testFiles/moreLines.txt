@@ -1,8 +1,0 @@
-create 500 400
-dot 100 100
-dot 400 300
-line 50 50 200 150
-line 300 50 450 150
-line 50 250 200 350
-line 300 250 450 350
-save result_image2.png

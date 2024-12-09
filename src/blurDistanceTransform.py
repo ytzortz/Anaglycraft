@@ -1,7 +1,7 @@
 import imageio.v3 as iio
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.ndimage import distance_transform_edt  # Updated import
+from scipy.ndimage import distance_transform_edt 
 
 # Load the grayscale image
 image = iio.imread(uri="grayImage.png")
