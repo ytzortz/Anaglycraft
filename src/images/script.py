@@ -1,3 +1,7 @@
+
+# ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΑΝΟΝΙΚΟ FILE
+
+
 import imageio.v3 as iio
 import matplotlib.pyplot as plt
 import numpy as np

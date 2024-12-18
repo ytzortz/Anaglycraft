@@ -1,16 +1,13 @@
+
+# AYTO EINAI TO ΚΑΝΟΝΙΚΟ FILE
+
+
 from PIL import Image
 import matplotlib.pyplot as plt
 import cv2
 import numpy as np
 from scipy.ndimage import distance_transform_edt 
 
-# This is the old one
-# def grayscale(image_path):
-#     # Open the image file in grayscale mode (flag = 0)
-#     grayscale_img = cv2.imread(image_path, 0)
-#     cv2.imwrite("grayImage.png", grayscale_img)
-#     # Return the grayscale image as a NumPy array
-#     return grayscale_img
 
 def grayscale(image_path, negative=False):
     # Open the image file in grayscale mode (flag = 0)
