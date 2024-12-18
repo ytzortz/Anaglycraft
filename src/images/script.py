@@ -1,7 +1,7 @@
 import imageio.v3 as iio
 import matplotlib.pyplot as plt
 import numpy as np
-from scipy.ndimage import distance_transform_edt
+# from scipy.ndimage import distance_transform_edt
 import os
 import time  # Import the time module for measuring elapsed time
 from grayscale import grayscale, get_non_white_pixel_locations_from_image, add_padding, normalized_value
@@ -16,24 +16,26 @@ output_directory = directory  # You can change this if you want to save in a dif
 # Set the threshold value for binary conversion
 threshold = 140
 
-for i in range(1, 5):
+for i in range(1, 2):
     total_start_time = time.time()  # Start timing for the entire process
     
     # Step 1: Generate Pixels
     print(f"Generating the pixels for the {i} time")
     step_start_time = time.time()  # Start timing this step
 
-    grayImage = grayscale(f"/Users/yiannis/Desktop/ptixiaki/ptixiaki/src/images/imagesBefore/{i}.png")
-    paddingImage = add_padding(grayImage, 0)
+    depth = 3
+    max_depth = 10
+
+    grayImage = grayscale(f"/Users/yiannis/Desktop/ptixiaki/ptixiaki/src/images/imagesBefore/{i}.png", False)
+    paddingImage = add_padding(grayImage, 80)
     # notWhiteList = get_non_white_pixel_locations_from_image(paddingImage, 180)   prev
-    intensityMatrix = get_non_white_pixel_locations_from_image(paddingImage, 100)
+    intensityMatrix = get_non_white_pixel_locations_from_image(paddingImage, 100, max_depth, "gaussian")
     # non_white_pixel_set = set(notWhiteList)                                       prev
     pixel_list = []
     # pixel_intensity_dict = {(x, y): intensity for (x, y, intensity) in notWhiteList}
 
+
     height, width = paddingImage.shape
-    depth = 3
-    max_depth = 50
 
     # height = len(intensityMatrix)        # Number of rows
     # width = len(intensityMatrix[0])      # Number of columns (assuming all rows are of equal length)
@@ -47,8 +49,13 @@ for i in range(1, 5):
                     # if (x, y) in pixel_intensity_dict:
                     if(z == 0):
                             # print(f"Twra tha valw values y:{y} kai x:{x}")
-                        intensity = intensityMatrix[x][y] # kanonika tha itan anapoda giati einai numpy array 
-                        adjusted_z = normalized_value(intensity, 0, 255, 0, max_depth)
+                        # intensity = intensityMatrix[y][x] # kanonika tha itan anapoda giati einai numpy array 
+                        # adjusted_z = normalized_value(intensity, 0, 255, 0, max_depth)
+
+                        ### the next lines is for the case of normalization happening in grascale.py
+                        intensity = intensityMatrix[y][x] # kanonika tha itan anapoda giati einai numpy array 
+                        adjusted_z = intensity
+
                     else:
                         adjusted_z = max_depth
                     pixel_list.append(f"{x:.1f} {y:.1f} {adjusted_z:.1f}")
