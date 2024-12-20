@@ -1,14 +1,9 @@
-
-# ΑΥΤΟ ΕΙΝΑΙ ΤΟ ΚΑΝΟΝΙΚΟ FILE
-
-
-import imageio.v3 as iio
-import matplotlib.pyplot as plt
-import numpy as np
-# from scipy.ndimage import distance_transform_edt
-import os
-import time  # Import the time module for measuring elapsed time
-from grayscale import grayscale, get_non_white_pixel_locations_from_image, add_padding, normalized_value
+# import imageio.v3 as iio
+# import matplotlib.pyplot as plt
+# import numpy as np
+# import os
+import time 
+from grayscale import grayscale, get_non_white_pixel_locations_from_image, add_padding
 
 # Start the timer for the entire script
 start_time_script = time.time()
@@ -32,34 +27,18 @@ for i in range(1, 2):
 
     grayImage = grayscale(f"/Users/yiannis/Desktop/ptixiaki/ptixiaki/src/images/imagesBefore/{i}.png", False)
     paddingImage = add_padding(grayImage, 80)
-    # notWhiteList = get_non_white_pixel_locations_from_image(paddingImage, 180)   prev
     intensityMatrix = get_non_white_pixel_locations_from_image(paddingImage, 100, max_depth, "gaussian")
-    # non_white_pixel_set = set(notWhiteList)                                       prev
+
     pixel_list = []
-    # pixel_intensity_dict = {(x, y): intensity for (x, y, intensity) in notWhiteList}
-
-
     height, width = paddingImage.shape
-
-    # height = len(intensityMatrix)        # Number of rows
-    # width = len(intensityMatrix[0])      # Number of columns (assuming all rows are of equal length)
-
-    # print(f"H eikona exei size y:{height} kai x:{width}")
-    # print(f"O matrix exei size y:{len(intensityMatrix)} kai x:{len(intensityMatrix[0])}")
     for z in range(0, depth):
         for y in range(height):
             for x in range(width):
                 if (x == 0 or x == width - 1 or y == 0 or y == height - 1 or z == 0 or z == depth - 1):
-                    # if (x, y) in pixel_intensity_dict:
                     if(z == 0):
-                            # print(f"Twra tha valw values y:{y} kai x:{x}")
-                        # intensity = intensityMatrix[y][x] # kanonika tha itan anapoda giati einai numpy array 
-                        # adjusted_z = normalized_value(intensity, 0, 255, 0, max_depth)
-
                         ### the next lines is for the case of normalization happening in grascale.py
                         intensity = intensityMatrix[y][x] # kanonika tha itan anapoda giati einai numpy array 
                         adjusted_z = intensity
-
                     else:
                         adjusted_z = max_depth
                     pixel_list.append(f"{x:.1f} {y:.1f} {adjusted_z:.1f}")
@@ -374,7 +353,6 @@ for i in range(1, 2):
                     faces.append((v2, v4, v3))  
                 k = k + 1
 
-
     step_end_time = time.time()
     print(f"Procedure ended. (Time: {step_end_time - step_start_time:.3f}s)\n")
 
@@ -393,7 +371,8 @@ for i in range(1, 2):
     print("Writing in file started.")
     step_start_time = time.time()  # Start timing this step
 
-    with open(f"/Users/yiannis/Desktop/ptixiaki/ptixiaki/src/images/imagesAfter/image{i}.obj", "w") as f:
+    # Save the object file here
+    with open(f"THIS_IS_THE_IMAGE{i}.obj", "w") as f:
         # Write vertices
         f.writelines(f"v {vertex}\n" for vertex in pixel_list)
         # Write faces
