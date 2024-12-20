@@ -9,8 +9,8 @@ def grayscale(image_path, negative=False):
     # Open the image file in grayscale mode (flag = 0)
     grayscale_img = cv2.imread(image_path, 0)
     
-    # if grayscale_img is None:
-    #     raise ValueError("Image not found. Check the image path.")
+    if grayscale_img is None:
+        raise ValueError("Image not found. Check the image path.")
 
     # Save the grayscale image for DEBUGGING if needed
     # cv2.imwrite("grayImage.png", grayscale_img)
@@ -68,26 +68,24 @@ def get_non_white_pixel_locations_from_image(image, threshold=100, maxDepth=50, 
 
             # Get RGB values
             r, g, b = img_rgb[y, x]
-            
             # Calculate intensity using luminance formula
             intensity = int(0.299 * r + 0.587 * g + 0.114 * b)
-
-            # Store intensity in the matrix if below threshold
             if r <= threshold or g <= threshold or b <= threshold:
                 normalized_intensity = int(normalized_value(intensity, 0, threshold, 0, maxDepth))
                 # intensity_matrix[y, x] = maxDepth #this is the previous, before the normalization
                 intensity_matrix[y, x] = maxDepth - normalized_intensity 
 
-    try:
-        plt.figure(figsize=(10, 8))
-        plt.imshow(intensity_matrix, cmap='gray')
-        plt.title(f'Intensity Matrix ({width}x{height})')
-        plt.colorbar()
-        plt.savefig(f'ptixiaki/src/images/imagesAfter/intensity_matrices/intensity_matrix_debug{height}.png')
-        print("Plot saved successfully.")
-        plt.close()
-    except Exception as e:
-        print("Error while plotting:", e)
+    # For debugging
+    # try:
+    #     plt.figure(figsize=(10, 8))
+    #     plt.imshow(intensity_matrix, cmap='gray')
+    #     plt.title(f'Intensity Matrix ({width}x{height})')
+    #     plt.colorbar()
+    #     plt.savefig(f'ptixiaki/src/images/imagesAfter/intensity_matrices/intensity_matrix_debug{height}.png')
+    #     print("Plot saved successfully.")
+    #     plt.close()
+    # except Exception as e:
+    #     print("Error while plotting:", e)
     
     # DEBUG code
     # Optional: Save the raw intensity matrix
@@ -108,7 +106,7 @@ def add_padding(image, pixels):
         left=pixels,   # Padding for left
         right=pixels,  # Padding for right
         borderType=cv2.BORDER_CONSTANT, 
-        value=padding_color  # The color of the padding (white in this case)
+        value=padding_color  # The color of the padding
     )
     
     # Return the padded image
