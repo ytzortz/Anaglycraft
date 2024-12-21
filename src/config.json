@@ -1,0 +1,10 @@
+{
+    "path_image": "1.png",
+    "path_output": ".",
+    "output_file_name": "file.obj",
+    "depth": 6,
+    "padding": 80,
+    "threshold": 100,
+    "negative": false,
+    "blurMethod": "gaussian"
+}
