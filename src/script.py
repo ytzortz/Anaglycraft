@@ -4,7 +4,7 @@
 # import numpy as np
 import os
 import time 
-from utils import grayscale, get_non_white_pixel_locations_from_image, add_padding, validate_config, load_config
+from utils import grayscale, get_non_white_pixel_locations_from_image, add_padding, load_config
 
 # Start the timer for the entire script
 # start_time_script = time.time() # This is for mutliple files
