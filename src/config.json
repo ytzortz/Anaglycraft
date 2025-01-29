@@ -1,0 +1,11 @@
+{
+    "path_image": "./withbackground.jpg",
+    "path_output": ".",
+    "output_file_name": "myFile",
+    "depth": 6,
+    "padding": 80,
+    "threshold": 100,
+    "negative": false,
+    "blurMethod": "gaussian",
+    "show_timing": true
+}

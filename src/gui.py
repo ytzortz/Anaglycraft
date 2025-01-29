@@ -72,6 +72,7 @@ def run_gui():
                 "threshold": threshold_value,
                 "negative": negative_var.get(),
                 "blurMethod": blur_value,
+                "show_timing": show_timing_var.get(),
             }
 
             # Create the config file
@@ -150,9 +151,15 @@ def run_gui():
     blur_method.grid(row=7, column=1, padx=10, pady=5)
     set_placeholder(blur_method, "Supported: \"dt\", \"gaussian\", \"box\"")
 
+    # tk.Label(root, text="Show Timing:").grid(row=8, column=0, padx=10, pady=5, sticky="w")
+    tk.Label(root, text="Show Timing:").grid(row=9, column=0, padx=10, pady=5, sticky="w")
+    show_timing_var = tk.BooleanVar(value=True)
+    tk.Checkbutton(root, variable=show_timing_var).grid(row=9, column=1, padx=10, pady=5, sticky="w")
+
+
     # Add Submit button
     submit_button = tk.Button(root, text="Submit", command=on_submit)
-    submit_button.grid(row=8, column=0, columnspan=2, pady=10)
+    submit_button.grid(row=10, column=0, columnspan=2, pady=10)
 
     # Start the GUI event loop
     root.mainloop()

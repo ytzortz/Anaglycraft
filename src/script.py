@@ -13,15 +13,20 @@ def runTheScript():
     total_start_time = time.time()  # Start timing for the entire process
 
 
-    # Step 1: Importing settings from config file
-    print("Importing settings from config file")
-    step_start_time = time.time()  # Start timing this step
 
     imported_json = load_config("config.json")
 
     if not imported_json:
         print("Failed to load configuration file. Exiting script.")
         exit()
+    
+    show_timing = imported_json["show_timing"]
+
+    # Step 1: Importing settings from config file
+    if show_timing:
+        print("Importing settings from config file")
+        step_start_time = time.time()  # Start timing this step
+
 
     path_image = imported_json["path_image"]
     path_output = imported_json["path_output"]
@@ -31,17 +36,21 @@ def runTheScript():
     threshold = imported_json["threshold"]
     negative = imported_json["negative"]
     blur_method = imported_json["blurMethod"]
+    
 
-    output_file_path = os.path.join(path_output, output_file_name)
+    output_file_path = os.path.join(path_output, output_file_name + ".obj")
 
-    step_end_time = time.time()
-    print(f"Importing ended. (Time: {step_end_time - step_start_time:.3f}s)\n")
-
+    if show_timing:
+        step_end_time = time.time()
+        print(f"Importing ended. (Time: {step_end_time - step_start_time:.3f}s)\n")
 
 
     # Step 2: Generate Pixels
-    print("Generating the pixels")
-    step_start_time = time.time()  # Start timing this step
+    if show_timing:
+        print("Generating the pixels")
+        step_start_time = time.time()  # Start timing this step
+
+    
 
     # depth = 6
     # padding = 80
@@ -65,15 +74,18 @@ def runTheScript():
                         adjusted_z = depth
                     pixel_list.append(f"{x:.1f} {y:.1f} {adjusted_z:.1f}")
 
-    step_end_time = time.time()
-    print(f"Generation of pixels ended. (Time: {step_end_time - step_start_time:.3f}s)\n")
+
+    if show_timing:
+        step_end_time = time.time()
+        print(f"Generation of pixels ended. (Time: {step_end_time - step_start_time:.3f}s)\n")
 
 
 
 
     # Step 3: Connect Vertices
-    print("Start connecting the vertices")
-    step_start_time = time.time()  # Start timing this step
+    if show_timing:
+        print("Start connecting the vertices")
+        step_start_time = time.time()  # Start timing this step
 
     faces = []
     allPoints = len(pixel_list)
@@ -349,28 +361,32 @@ def runTheScript():
                     faces.append((v2, v4, v3))  
                 k = k + 1
 
-    step_end_time = time.time()
-    print(f"Procedure ended. (Time: {step_end_time - step_start_time:.3f}s)\n")
+    if show_timing:
+        step_end_time = time.time()
+        print(f"Procedure ended. (Time: {step_end_time - step_start_time:.3f}s)\n")
 
 
 
 
     # Step 4: Write Vertices to List
-    print("Writing the vertices in list.")
-    step_start_time = time.time()  # Start timing this step
+    if show_timing:
+        print("Writing the vertices in list.")
+        step_start_time = time.time()  # Start timing this step
 
     obj_faces = ""
     obj_faces = [f"v {vertex}" for vertex in pixel_list]
     obj_faces = "\n".join(obj_faces)
 
-    step_end_time = time.time()
-    print(f"Writing is over. (Time: {step_end_time - step_start_time:.3f}s)\n")
+    if show_timing:
+        step_end_time = time.time()
+        print(f"Writing is over. (Time: {step_end_time - step_start_time:.3f}s)\n")
 
 
 
     # Step 5: Write to File
-    print("Writing in file started.")
-    step_start_time = time.time()  # Start timing this step
+    if show_timing:
+        print("Writing in file started.")
+        step_start_time = time.time()  # Start timing this step
 
     # Save the object file here
     with open(output_file_path, "w") as f:
@@ -379,11 +395,13 @@ def runTheScript():
         # Write faces
         f.writelines(f"f {face[0]} {face[1]} {face[2]}\n" for face in faces)
 
-    step_end_time = time.time()
-    print(f"File generated. (Time: {step_end_time - step_start_time:.3f}s)\n")
+    if show_timing:
+        step_end_time = time.time()
+        print(f"File generated. (Time: {step_end_time - step_start_time:.3f}s)\n")
 
-    total_end_time = time.time()
-    print(f"Total time: {total_end_time - total_start_time:.3f}s\n\n")
+    if show_timing:
+        total_end_time = time.time()
+        print(f"Total time: {total_end_time - total_start_time:.3f}s\n\n")
 
     # This is for multiple images
     # end_time_script = time.time()

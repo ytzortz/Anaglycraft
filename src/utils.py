@@ -125,7 +125,7 @@ def validate_config(config):
     
     # Check if required fields exist
     required_fields = ["path_image", "path_output", "output_file_name", 
-                      "depth", "padding", "threshold", "negative", "blurMethod"]
+                      "depth", "padding", "threshold", "negative", "blurMethod", "show_timing"]
     
     for field in required_fields:
         if field not in config:
@@ -150,13 +150,17 @@ def validate_config(config):
     if not isinstance(config["threshold"], int) or not 0 <= config["threshold"] <= 255:
         errors.append("Threshold must be an integer between 0 and 255")
     
-    # Validate boolean
+    # Validate negative boolean
     if not isinstance(config["negative"], bool):
         errors.append("Negative must be a boolean value")
     
     # Validate blur method
     if config["blurMethod"] not in ["dt", "gaussian", "box"]:
         errors.append("Blur method must be one of: dt, gaussian, box")
+    
+    # Validate timing boolean
+    if not isinstance(config["show_timing"], bool):
+        errors.append("Show timing must be a boolean value")
     
     return len(errors) == 0, errors
 
