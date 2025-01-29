@@ -6,5 +6,6 @@
     "padding": 80,
     "threshold": 100,
     "negative": false,
-    "blurMethod": "gaussian"
+    "blurMethod": "gaussian",
+    "show_timing": true
 }
