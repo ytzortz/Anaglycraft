@@ -1,16 +1,12 @@
 import os
-import subprocess
-import json
 from gui import run_gui  # Import the GUI function you will create
 import script
 
 CONFIG_FILE = "config.json"
 
 def main():
-    # Check if the config file exists
     if os.path.exists(CONFIG_FILE):
         print(f"\nFound {CONFIG_FILE}, running the script...\n\n")
-        # subprocess.run(["python", "script.py"])  # Run the script directly
         script.runTheScript()
     else:
         print(f"\n{CONFIG_FILE} not found, opening the GUI...\n\n")

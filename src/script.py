@@ -12,8 +12,6 @@ def runTheScript():
     # start_time_script = time.time() # This is for mutliple files
     total_start_time = time.time()  # Start timing for the entire process
 
-
-
     imported_json = load_config("config.json")
 
     if not imported_json:
