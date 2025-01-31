@@ -1,3 +1,10 @@
+"""
+This project is licensed under the Apache License 2.0.
+Author: Ioannis Tzortzakis (Github: ytzortz)
+Original repository: https://github.com/ytzortz/Thesis
+"""
+
+
 import os
 from gui import run_gui  # Import the GUI function you will create
 import script

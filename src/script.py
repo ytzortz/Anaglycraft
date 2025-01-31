@@ -1,3 +1,10 @@
+"""
+This project is licensed under the Apache License 2.0.
+Author: Ioannis Tzortzakis (Github: ytzortz)
+Original repository: https://github.com/ytzortz/Thesis
+"""
+
+
 # libraries used in debug
 # import imageio.v3 as iio
 # import matplotlib.pyplot as plt

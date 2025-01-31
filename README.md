@@ -1,9 +1,12 @@
 ﻿# 2D to 3D Object Conversion
 
 ## Overview
-This project is  my  **Bachelor's Thesis**  at the  **Computer Science Department of the University of Crete (UoC)**. It is conducted under the supervision of  **Dr. Xenophon Zabulis**  and is developed within the context of the  **European CRAEFT Project**  ([craeft.eu](https://www.craeft.eu/)).
 
 The goal of this project is to convert a 2D drawing from an image into a 3D object, creating an effect as if the design were engraved or embossed on a metallic surface. The program reads processing parameters from a configuration file, or alternatively, allows users to set custom parameters through a graphical user interface (GUI). The final output is a  `.obj`  file, which can be used in 3D modeling applications.
+
+This project is  my  **Bachelor's Thesis**  at the  **Computer Science Department of the University of Crete (UoC)**. It is conducted under the supervision of  **Dr. Xenophon Zabulis**  and is developed within the context of the  **European CRAEFT Project**  ([craeft.eu](https://www.craeft.eu/)).
+
+
 
  ## Installation & Dependencies
  ### **Requirements**
@@ -25,6 +28,8 @@ Make sure you have the following dependencies installed:
 	pip install -r requirements.txt
 	```
 
+### **Execution**
+To ensure the program runs correctly, you must execute the "main" script from the src directory.
 
 ## **Usage**
 
@@ -88,4 +93,5 @@ This project is part of my  **Bachelor’s Thesis**  at the  **University of Cre
 
 ## License
 
-maybe?
+![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)
+

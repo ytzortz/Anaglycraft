@@ -1,3 +1,10 @@
+"""
+This project is licensed under the Apache License 2.0.
+Author: Ioannis Tzortzakis (Github: ytzortz)
+Original repository: https://github.com/ytzortz/Thesis
+"""
+
+
 import tkinter as tk
 from tkinter import messagebox
 import json

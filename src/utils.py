@@ -1,3 +1,10 @@
+"""
+This project is licensed under the Apache License 2.0.
+Author: Ioannis Tzortzakis (Github: ytzortz)
+Original repository: https://github.com/ytzortz/Thesis
+"""
+
+
 # Libraries used in debugging
 # from PIL import Image
 # import matplotlib.pyplot as plt 
