@@ -1,4 +1,4 @@
-﻿# 2D to 3D Object Conversion
+# 2D to 3D Object Conversion
 
 ## Overview
 
@@ -69,7 +69,7 @@ The program reads parameters from a JSON configuration file. Below is an example
 - ``threshold``: Integer value (0-255) that determines which pixels are considered "active" for processing. In the grayscale conversion:
 	-  Pixels below this threshold are processed for the 3D effect
 	-  Pixels above this threshold are considered background
-	- Lower values capture more details, higher values capture only darker areas
+	-  Higher values capture more details
 
 - ``negative``: Boolean value that inverts the image processing (negative effect)
 
@@ -78,7 +78,7 @@ The program reads parameters from a JSON configuration file. Below is an example
 	- "gaussian": Applies Gaussian blur for smoother transitions.
 	- "box": Uses simple box blur (averaging) Each method creates different types of transitions between heights in the final 3D model.
 	
-- ``show_timing``: Boolean value that controls whether the program shows execution time information for each processing step. The timings are printing in console.
+- ``show_timing``: Boolean value that controls whether the program shows execution time information for each processing step. The timings are printed in the console.
 
 ## **Processing Pipeline**
 
