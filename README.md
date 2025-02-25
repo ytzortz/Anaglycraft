@@ -87,6 +87,21 @@ The program reads parameters from a JSON configuration file. Below is an example
 3.  **Generate Mesh**  → Uses the selected blur method to calculate height variations and generate the points and the vertices.
 4.  **Export 3D Model**  → Generates and saves the  `.obj`  file.
 
+
+## Rendered Outputs
+
+Here are some sample renderings generated from the 3D objects:
+
+
+<img src="renders/ytz_8_3.png" width="400">
+<img src="renders/ytz_9_4.png" width="400">
+<img src="renders/ytz_14_2.png" width="400">
+<img src="renders/ytz_15_5.png" width="400">
+<img src="renders/ytz_99_99.png" width="400">
+
+
+
+
 ## **Acknowledgments**
 
 This project is part of my  **Bachelor’s Thesis**  at the  **University of Crete (UoC)**, supervised by  **Dr. Xenophon Zabulis**. It has been developed within the framework of the  **European CRAEFT Project**  ([craeft.eu](https://www.craeft.eu/)).
